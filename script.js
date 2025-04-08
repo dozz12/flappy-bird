@@ -61,13 +61,21 @@ function animate() {
 
   bird.velocity += bird.gravity;
   bird.y += bird.velocity;
-  bird.angle = Math.min(Math.PI / 6, bird.velocity / 10);
 
-  if (bird.y + bird.height > canvas.height || bird.y < 0) {
+  // 👇 Tambahkan di sini
+  if (bird.y + bird.height >= canvas.height - 5) {
+    bird.y = canvas.height - bird.height;
     return endGame();
   }
 
-  if (frame % 90 === 0) {
+  if (bird.y < 0) {
+    bird.y = 0;
+    bird.velocity = 0;
+  }
+
+  // ...lanjut kode lainnya
+
+ if (frame % 90 === 0) {
     let top = Math.random() * 200 + 50;
     let gap = 140;
     pipes.push({
@@ -126,20 +134,3 @@ document.addEventListener("click", flap);
 
 init();
 
-function animate() {
-  if (gameOver) return;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  bird.velocity += bird.gravity;
-  bird.y += bird.velocity;
-
-  // 👇 Tambahkan di sini
-  if (bird.y + bird.height >= canvas.height - 5) {
-    bird.y = canvas.height - bird.height;
-    return endGame();
-  }
-
-  if (bird.y < 0) {
-    bird.y = 0;
-    bird.velocity = 0;
