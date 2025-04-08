@@ -125,3 +125,21 @@ document.addEventListener("keydown", e => {
 document.addEventListener("click", flap);
 
 init();
+
+function animate() {
+  if (gameOver) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  bird.velocity += bird.gravity;
+  bird.y += bird.velocity;
+
+  // 👇 Tambahkan di sini
+  if (bird.y + bird.height >= canvas.height - 5) {
+    bird.y = canvas.height - bird.height;
+    return endGame();
+  }
+
+  if (bird.y < 0) {
+    bird.y = 0;
+    bird.velocity = 0;
